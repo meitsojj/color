@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>四季個人色彩｜thatsmei.makeup</title>
+<meta name="description" content="追蹤 @thatsmei.makeup，解鎖免費 AI 個人色彩測驗與 CORTIS 色彩遊戲">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='11' cy='11' r='8' fill='%23E8894A'/%3E%3Ccircle cx='21' cy='11' r='8' fill='%238C9CC8'/%3E%3Ccircle cx='11' cy='21' r='8' fill='%23A86B3C'/%3E%3Ccircle cx='21' cy='21' r='8' fill='%238E2F45'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700&family=Cormorant+Garamond:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FBF8F3; --card: #FFFFFF; --ink: #3A3330; --muted: #8A7F78; --line: #E6DED5;
+    --spring: #E8894A; --summer: #8C9CC8; --autumn: #A86B3C; --winter: #8E2F45;
+    --ig: radial-gradient(circle at 30% 107%, #FED373 0%, #F15245 26%, #D92E7F 55%, #9B36B7 75%, #515ECF 100%);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --paper: #1F1B19; --card: #2A2522; --ink: #F3EDE7; --muted: #B5AAA2; --line: #3D3632; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: "Noto Sans TC", sans-serif; min-height: 100vh;
+         display: flex; justify-content: center; padding: 28px 16px 40px; }
+  main { width: 100%; max-width: 440px; }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .eyebrow { font-family: "Cormorant Garamond", serif; font-size: 13px; letter-spacing: .3em; color: var(--muted); margin-top: 14px; }
+  h1 { font-family: "Noto Serif TC", serif; font-size: 30px; letter-spacing: .06em; margin-top: 4px; }
+  .lead { color: var(--muted); font-size: 14px; margin-top: 8px; line-height: 1.6; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-top: 22px; }
+  .step { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--muted); }
+  .card h2 { font-size: 18px; margin-top: 6px; }
+  .card p { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+
+  .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 52px;
+         border-radius: 12px; font-size: 16px; font-weight: 700; text-decoration: none; border: 0; cursor: pointer;
+         margin-top: 14px; font-family: inherit; transition: transform .15s, opacity .2s; }
+  .btn:active { transform: scale(.98); }
+  .btn-ig { background: var(--ig); color: #fff; }
+  .btn-ig svg { width: 22px; height: 22px; }
+  .btn-done { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+  .btn-done[disabled] { opacity: .35; cursor: not-allowed; }
+  .hint { font-size: 12px; color: var(--muted); text-align: center; margin-top: 8px; }
+
+  .locked { position: relative; }
+  .locked .links { filter: blur(3px); opacity: .45; pointer-events: none; user-select: none; }
+  .locked .lock { display: flex; }
+  .lock { display: none; position: absolute; inset: 0; align-items: center; justify-content: center;
+          font-size: 14px; font-weight: 700; color: var(--ink); }
+  .link { display: flex; align-items: center; gap: 14px; padding: 14px; border-radius: 12px; border: 1px solid var(--line);
+          text-decoration: none; color: var(--ink); margin-top: 10px; background: var(--paper); }
+  .link .ico { width: 44px; height: 44px; border-radius: 12px; flex: none; display: flex; align-items: center; justify-content: center;
+               color: #fff; font-family: "Noto Serif TC", serif; font-size: 18px; }
+  .link b { display: block; font-size: 16px; }
+  .link span { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .link .go { margin-left: auto; color: var(--muted); font-size: 20px; }
+  .unlocked-msg { display: none; font-size: 13px; color: var(--autumn); font-weight: 700; margin-top: 4px; }
+  .is-unlocked .unlocked-msg { display: block; }
+
+  footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 28px; line-height: 1.8; }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <div class="dots"><i style="background:var(--spring)"></i><i style="background:var(--summer)"></i><i style="background:var(--autumn)"></i><i style="background:var(--winter)"></i></div>
+  <div class="eyebrow">PERSONAL COLOR</div>
+  <h1>四季個人色彩</h1>
+  <p class="lead">找到最襯你的顏色。追蹤 IG 就能解鎖免費 AI 測色與色彩遊戲。</p>
+
+  <section class="card" id="follow-card">
+    <div class="step">STEP 1</div>
+    <h2>先追蹤 IG</h2>
+    <p>追蹤 @thatsmei.makeup，不定期分享四季配色、妝容與穿搭技巧。</p>
+    <a class="btn btn-ig" id="ig-btn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.3" fill="#fff"/></svg>
+      前往 IG 追蹤 @thatsmei.makeup
+    </a>
+    <button class="btn btn-done" id="done-btn" disabled>我已追蹤，解鎖內容 ✓</button>
+    <div class="hint" id="done-hint">先點上方按鈕追蹤，再回到這一頁</div>
+  </section>
+
+  <section class="card locked" id="content-card">
+    <div class="step">STEP 2</div>
+    <h2>開始玩</h2>
+    <div class="unlocked-msg">已解鎖，謝謝你的追蹤 ♡</div>
+    <div class="links">
+      <a class="link" id="link-test" target="_blank" rel="noopener">
+        <div class="ico" style="background:linear-gradient(135deg,var(--spring),var(--winter))">測</div>
+        <div><b>免費 AI 個人色彩測驗</b><span>上傳一張照片，看看你是哪一季</span></div><div class="go">›</div>
+      </a>
+      <a class="link" id="link-game" target="_blank" rel="noopener">
+        <div class="ico" style="background:linear-gradient(135deg,var(--summer),var(--autumn))">玩</div>
+        <div><b>CORTIS 色彩遊戲</b><span>泡泡小遊戲，找出你的偶像色彩</span></div><div class="go">›</div>
+      </a>
+      <a class="link" id="link-book" target="_blank" rel="noopener">
+        <div class="ico" style="background:var(--ig)">約</div>
+        <div><b>預約現場一對一測色</b><span>私訊 IG 預約時間</span></div><div class="go">›</div>
+      </a>
+    </div>
+    <div class="lock">🔒 完成 STEP 1 後解鎖</div>
+  </section>
+
+  <footer>
+    © thatsmei.makeup ・ <a id="ig-footer" target="_blank" rel="noopener">Instagram</a>
+  </footer>
+</main>
+
+<script>
+  // ===== 之後網站搬家，只要改這裡的網址 =====
+  const LINKS = {
+    instagram: "https://www.instagram.com/thatsmei.makeup/",
+    test:      "https://coloranalysis.zeabur.app/",
+    game:      "https://coloranalysis.zeabur.app/game/cortis/",
+    booking:   "https://ig.me/m/thatsmei.makeup",
+  };
+  // ==========================================
+
+  const $ = id => document.getElementById(id);
+  $("ig-btn").href = LINKS.instagram;
+  $("ig-footer").href = LINKS.instagram;
+  $("link-test").href = LINKS.test;
+  $("link-game").href = LINKS.game;
+  $("link-book").href = LINKS.booking;
+
+  // 沒辦法真的確認有沒有追蹤（IG 不提供），所以是「點過 IG 按鈕 → 才能按我已追蹤」
+  const KEY = "thatsmei_unlocked";
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+  };
+
+  function unlock() {
+    $("content-card").classList.remove("locked");
+    $("content-card").classList.add("is-unlocked");
+    $("done-btn").disabled = true;
+    $("done-btn").textContent = "已解鎖 ✓";
+    $("done-hint").textContent = "";
+  }
+  function enableDone() {
+    $("done-btn").disabled = false;
+    $("done-hint").textContent = "追蹤好了嗎？按上面的按鈕解鎖";
+  }
+
+  $("ig-btn").addEventListener("click", () => { store.set("thatsmei_ig_clicked", "1"); enableDone(); });
+  $("done-btn").addEventListener("click", () => {
+    store.set(KEY, "1");
+    unlock();
+    $("content-card").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  if (store.get(KEY) === "1") unlock();
+  else if (store.get("thatsmei_ig_clicked") === "1") enableDone();
+</script>
+</body>
+</html>
